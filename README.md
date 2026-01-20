@@ -1,4 +1,5 @@
 # Bags Sniper Bot
+![unnamed](https://github.com/user-attachments/assets/fad6c7c0-b4dd-4124-b407-e436de98c55e)
 
 **Deployer Intelligence Trading Bot for Solana Memecoins**
 
@@ -76,8 +77,8 @@ This bot identifies and tracks these elite deployers to catch their token launch
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/bags-sniper.git
-cd bags-sniper
+git clone https://github.com/natekali/moneybags.git
+cd moneybags
 
 # Install Python package
 pip install -e .
