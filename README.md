@@ -1,4 +1,5 @@
 # Bags Sniper Bot
+![unnamed](https://github.com/user-attachments/assets/fad6c7c0-b4dd-4124-b407-e436de98c55e)
 
 **Deployer Intelligence Trading Bot for Solana Memecoins**
 
