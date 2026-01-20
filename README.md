@@ -77,8 +77,8 @@ This bot identifies and tracks these elite deployers to catch their token launch
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/bags-sniper.git
-cd bags-sniper
+git clone https://github.com/natekali/moneybags.git
+cd moneybags
 
 # Install Python package
 pip install -e .
