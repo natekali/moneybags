@@ -1,0 +1,186 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "gridPos": { "h": 3, "w": 24, "x": 0, "y": 0 },
+      "id": 1,
+      "options": { "content": "# Bags Sniper Dashboard\nReal-time monitoring of the Solana memecoin trading bot.", "mode": "markdown" },
+      "title": "",
+      "type": "text"
+    },
+    {
+      "gridPos": { "h": 4, "w": 4, "x": 0, "y": 3 },
+      "id": 2,
+      "options": { "colorMode": "value", "graphMode": "area", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" },
+      "targets": [{ "expr": "bags_sniper_bot_status", "refId": "A" }],
+      "title": "Bot Status",
+      "type": "stat"
+    },
+    {
+      "gridPos": { "h": 4, "w": 4, "x": 4, "y": 3 },
+      "id": 3,
+      "options": { "colorMode": "value", "graphMode": "area", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" },
+      "targets": [{ "expr": "bags_sniper_circuit_breaker_level", "refId": "A" }],
+      "title": "Circuit Breaker Level",
+      "type": "stat"
+    },
+    {
+      "gridPos": { "h": 4, "w": 4, "x": 8, "y": 3 },
+      "id": 4,
+      "options": { "colorMode": "value", "graphMode": "area", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" },
+      "targets": [{ "expr": "bags_sniper_active_positions", "refId": "A" }],
+      "title": "Active Positions",
+      "type": "stat"
+    },
+    {
+      "gridPos": { "h": 4, "w": 4, "x": 12, "y": 3 },
+      "id": 5,
+      "options": { "colorMode": "value", "graphMode": "area", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" },
+      "targets": [{ "expr": "bags_sniper_daily_pnl_sol", "refId": "A" }],
+      "title": "Daily P&L (SOL)",
+      "type": "stat"
+    },
+    {
+      "gridPos": { "h": 4, "w": 4, "x": 16, "y": 3 },
+      "id": 6,
+      "options": { "colorMode": "value", "graphMode": "area", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" },
+      "targets": [{ "expr": "bags_sniper_pnl_sol", "refId": "A" }],
+      "title": "Total P&L (SOL)",
+      "type": "stat"
+    },
+    {
+      "gridPos": { "h": 4, "w": 4, "x": 20, "y": 3 },
+      "id": 7,
+      "options": { "colorMode": "value", "graphMode": "area", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" },
+      "targets": [{ "expr": "bags_sniper_current_drawdown_percent", "refId": "A" }],
+      "title": "Current Drawdown %",
+      "type": "stat"
+    },
+    {
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 7 },
+      "id": 8,
+      "options": { "legend": { "calcs": [], "displayMode": "list", "placement": "bottom" }, "tooltip": { "mode": "single" } },
+      "targets": [
+        { "expr": "rate(bags_sniper_trades_won_total[5m]) / (rate(bags_sniper_trades_won_total[5m]) + rate(bags_sniper_trades_lost_total[5m])) * 100", "legendFormat": "Win Rate %", "refId": "A" }
+      ],
+      "title": "Win Rate (5m rolling)",
+      "type": "timeseries"
+    },
+    {
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 7 },
+      "id": 9,
+      "options": { "legend": { "calcs": [], "displayMode": "list", "placement": "bottom" }, "tooltip": { "mode": "single" } },
+      "targets": [
+        { "expr": "bags_sniper_daily_pnl_sol", "legendFormat": "Daily P&L", "refId": "A" },
+        { "expr": "bags_sniper_pnl_sol", "legendFormat": "Total P&L", "refId": "B" }
+      ],
+      "title": "P&L Over Time",
+      "type": "timeseries"
+    },
+    {
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 15 },
+      "id": 10,
+      "options": { "legend": { "calcs": [], "displayMode": "list", "placement": "bottom" }, "tooltip": { "mode": "single" } },
+      "targets": [
+        { "expr": "rate(bags_sniper_trades_total{direction=\"buy\"}[1m]) * 60", "legendFormat": "Entries/min", "refId": "A" },
+        { "expr": "rate(bags_sniper_trades_total{direction=\"sell\"}[1m]) * 60", "legendFormat": "Exits/min", "refId": "B" }
+      ],
+      "title": "Trade Rate",
+      "type": "timeseries"
+    },
+    {
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 15 },
+      "id": 11,
+      "options": { "legend": { "calcs": [], "displayMode": "list", "placement": "bottom" }, "tooltip": { "mode": "single" } },
+      "targets": [
+        { "expr": "histogram_quantile(0.5, rate(bags_sniper_filter_latency_ms_bucket[5m]))", "legendFormat": "p50", "refId": "A" },
+        { "expr": "histogram_quantile(0.95, rate(bags_sniper_filter_latency_ms_bucket[5m]))", "legendFormat": "p95", "refId": "B" },
+        { "expr": "histogram_quantile(0.99, rate(bags_sniper_filter_latency_ms_bucket[5m]))", "legendFormat": "p99", "refId": "C" }
+      ],
+      "title": "Filter Latency (ms)",
+      "type": "timeseries"
+    },
+    {
+      "gridPos": { "h": 8, "w": 8, "x": 0, "y": 23 },
+      "id": 12,
+      "options": { "legend": { "calcs": [], "displayMode": "list", "placement": "right" }, "pieType": "pie", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "tooltip": { "mode": "single" } },
+      "targets": [
+        { "expr": "sum(bags_sniper_trades_total{reason=\"tp1\"}) or vector(0)", "legendFormat": "TP1", "refId": "A" },
+        { "expr": "sum(bags_sniper_trades_total{reason=\"tp2\"}) or vector(0)", "legendFormat": "TP2", "refId": "B" },
+        { "expr": "sum(bags_sniper_trades_total{reason=\"tp3\"}) or vector(0)", "legendFormat": "TP3", "refId": "C" },
+        { "expr": "sum(bags_sniper_trades_total{reason=\"stop_loss\"}) or vector(0)", "legendFormat": "Stop Loss", "refId": "D" },
+        { "expr": "sum(bags_sniper_trades_total{reason=\"trailing_stop\"}) or vector(0)", "legendFormat": "Trailing", "refId": "E" },
+        { "expr": "sum(bags_sniper_trades_total{reason=\"hard_exit\"}) or vector(0)", "legendFormat": "Hard Exit", "refId": "F" }
+      ],
+      "title": "Exit Reasons",
+      "type": "piechart"
+    },
+    {
+      "gridPos": { "h": 8, "w": 8, "x": 8, "y": 23 },
+      "id": 13,
+      "options": { "legend": { "calcs": [], "displayMode": "list", "placement": "right" }, "pieType": "pie", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "tooltip": { "mode": "single" } },
+      "targets": [
+        { "expr": "sum(bags_sniper_tokens_filtered_total{stage=\"deployer\"}) or vector(0)", "legendFormat": "Deployer", "refId": "A" },
+        { "expr": "sum(bags_sniper_tokens_filtered_total{stage=\"basic\"}) or vector(0)", "legendFormat": "Basic", "refId": "B" },
+        { "expr": "sum(bags_sniper_tokens_filtered_total{stage=\"liquidity\"}) or vector(0)", "legendFormat": "Liquidity", "refId": "C" },
+        { "expr": "sum(bags_sniper_tokens_filtered_total{stage=\"timing\"}) or vector(0)", "legendFormat": "Timing", "refId": "D" },
+        { "expr": "sum(bags_sniper_tokens_filtered_total{stage=\"security\"}) or vector(0)", "legendFormat": "Security", "refId": "E" }
+      ],
+      "title": "Filter Rejections by Stage",
+      "type": "piechart"
+    },
+    {
+      "gridPos": { "h": 8, "w": 8, "x": 16, "y": 23 },
+      "id": 14,
+      "options": { "legend": { "calcs": [], "displayMode": "list", "placement": "bottom" }, "tooltip": { "mode": "single" } },
+      "targets": [
+        { "expr": "histogram_quantile(0.5, rate(bags_sniper_deployer_score_at_entry_bucket[1h]))", "legendFormat": "Median Score", "refId": "A" },
+        { "expr": "histogram_quantile(0.9, rate(bags_sniper_deployer_score_at_entry_bucket[1h]))", "legendFormat": "p90 Score", "refId": "B" }
+      ],
+      "title": "Deployer Scores at Entry",
+      "type": "timeseries"
+    },
+    {
+      "gridPos": { "h": 6, "w": 12, "x": 0, "y": 31 },
+      "id": 15,
+      "options": { "legend": { "calcs": [], "displayMode": "list", "placement": "bottom" }, "tooltip": { "mode": "single" } },
+      "targets": [
+        { "expr": "histogram_quantile(0.5, rate(bags_sniper_api_latency_ms_bucket{endpoint=\"bags\"}[5m]))", "legendFormat": "Bags p50", "refId": "A" },
+        { "expr": "histogram_quantile(0.5, rate(bags_sniper_api_latency_ms_bucket{endpoint=\"rpc\"}[5m]))", "legendFormat": "RPC p50", "refId": "B" },
+        { "expr": "histogram_quantile(0.5, rate(bags_sniper_api_latency_ms_bucket{endpoint=\"jito\"}[5m]))", "legendFormat": "Jito p50", "refId": "C" }
+      ],
+      "title": "API Latency by Endpoint",
+      "type": "timeseries"
+    },
+    {
+      "gridPos": { "h": 6, "w": 12, "x": 12, "y": 31 },
+      "id": 16,
+      "options": { "legend": { "calcs": [], "displayMode": "list", "placement": "bottom" }, "tooltip": { "mode": "single" } },
+      "targets": [
+        { "expr": "rate(bags_sniper_api_errors_total[5m])", "legendFormat": "{{endpoint}}: {{error_type}}", "refId": "A" }
+      ],
+      "title": "API Errors",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": ["bags-sniper", "trading", "solana"],
+  "templating": { "list": [] },
+  "time": { "from": "now-6h", "to": "now" },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Bags Sniper Dashboard",
+  "uid": "bags-sniper-main",
+  "version": 1,
+  "weekStart": ""
+}
